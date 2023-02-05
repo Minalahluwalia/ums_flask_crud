@@ -1,0 +1,22 @@
+
+<body>
+  <nav class = "navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class = "navbar-nav">
+        <li class = "nav-item">
+          <div class = "alert alert-info">{{ session.name }}</div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="{{url_for('users')}}">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="{{url_for('register')}}">Add User</a>
+        </li>
+        <li class="nav-item float-right">
+          <a class="nav-link text-info">Logged in: {{session.name}}</a>
+        </li>
+        <li class = "nav-item float-right">
+          <a class = "nav-link text-warning" href="{{url_for('logout')}}">Logout </a>
+        </li>
+    </ul>
+  </nav>
+</body>

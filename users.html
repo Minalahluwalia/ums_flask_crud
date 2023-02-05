@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+<title>User Listing</title>
+<body>
+<div class="container">
+    {% include 'menu.html' %}
+    <br>
+    <h3>User Listing</h3>
+    <br>
+    <table class = "table table-striped">
+        <thead>
+        <tr>
+            <th>Sr No</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Country</th>
+            <th>Role</th>
+            <br>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{user.0}}</td>
+                <td>{{user.1}}</td>
+                <td>{{user.2}}</td>
+                <td>{{user.3}}</td>
+                <td>{{user.4}}</td>
+                <td>{{user.5}}</td>
+                <td><a href = "{{ url_for('view', userid=user.userid) }}" class = "btn btn-success">View</a></td>
+                <td><a href = "{{ url_for('change_password', userid=user.userid) }}" class = "btn btn-warning">Change Password</a></td>
+                <td><a href = "{{ url_for('delete', userid=user.userid) }}" id = "userid" class = "btn btn-danger">Delete</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
