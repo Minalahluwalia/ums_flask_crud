@@ -130,24 +130,25 @@ def change_password():
     return render_template('change_password.html', message=message)
 
 
-@app.route('/delete', methods=["GET", "POST"])
+@app.route('/delete', methods=['GET', 'POST'])
 def delete():
-    message = ''
-    if request.method == 'POST' and 'email' in request.form and 'userid' in request.form:
-        userId = request.form['userid']
-        conn = MySQLdb.connect(
-            host='127.0.0.1',
-            user='newuser',
-            password='12345',
-            db='mydata',
-        )
-        curr = conn.cursor()
-        curr.execute('DELETE * FROM user WHERE email = % s AND userid = % s', (userId,))
-        print(curr, 'deleted')
-        conn.commit()
-        print(curr, 'deleted2')
-        message = 'Deleted Successfully !'
-    return render_template('users.html', message=message)
+    msg = ''
+    if 'logged_in' in session:
+        if request.method == 'POST' and 'name' in request.form and 'email' in request.form:
+            email = request.form['email']
+            userid = request.form['userid']
+            conn = MySQLdb.connect(
+                    host='127.0.0.1',
+                    user='newuser',
+                    password='12345',
+                    db='mydata',
+            )
+            curr = conn.cursor()
+            curr.execute('DELETE userid FROM user where email = % s', (userid, email))
+            conn.commit()
+            msg = 'deleted successfully!'
+        return redirect(url_for('delete', msg=msg))
+    return redirect(url_for('users'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
