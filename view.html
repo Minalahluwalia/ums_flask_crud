@@ -1,8 +1,9 @@
 {% include 'header.html' %}
-<table>
+<table class= "table table-dark">
     <thead>
+    {% include 'menu.html' %}
         <tr>
-            <th>ID</th>
+            <th scope="col">ID</th>
             <th>Username</th>
             <th>Email ID</th>
             <th> Password</th>
@@ -13,7 +14,7 @@
     <tbody>
         {% for user in users %}
         <tr>
-            <td>{{ user[0] }}</td>
+            <td scope="row">{{ user[0] }}</td>
             <td>{{ user[1] }}</td>
             <td>{{ user[2] }}</td>
             <td>{{ user[3] }}</td>
@@ -23,3 +24,4 @@
         {% endfor %}
     </tbody>
 </table>
+ </div>
