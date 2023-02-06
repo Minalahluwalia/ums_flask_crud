@@ -1,25 +1,26 @@
 {% include 'header.html' %}
-<header> <h4>User Management System </h4> </header>
 <title>User Login Form</title>
 <body>
-<div class = "container">
-
+<div class = "container card bg-dark text-white">
+    <h4><center>User Management System</center></h4>
      <br>
      <h3>User Login</h3>
+        <div class = "nav-item float-right">
+            <a class = "nav-link text-warning" href="{{url_for('login')}}">Home</a></div>
      <br>
      <form action = "{{ url_for('login') }}" method="post">
          {% if message is defined and message %}
-             <div class = "alert alert-warning">{{ message }}</div>
+             <div class = "alert alert-warning alert-dark">{{ message }}</div>
          {% endif %}
-         <div class = "form-group">
+         <div class = "form-group card bg-dark text-white">
             <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
          </div>
-         <div class="form-group">
+         <div class="form-group card bg-dark text-white">
                 <label for="password">Password:</label>
                 <input type="password" class=" form-control" id="password" name="password" placeholder="Enter password">
          </div>
-         <button type="submit" class="btn btn-primary">Login</button>
+         <button type="submit" class="btn btn-primary btn-dark">Login</button>
      </form>
 </div>
 </body>
