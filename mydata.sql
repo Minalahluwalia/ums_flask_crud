@@ -29,10 +29,10 @@ UPDATE `user` SET role = "admin" WHERE userid = "7";
 
 DELETE FROM `user` WHERE email = "xyzS12@gmail.com";
 
-DELETE FROM user 
-WHERE userid = 7 ;
+DELETE FROM user WHERE email = "xyzS12@gmail.com" AND userid = "1";
 
-SELECT * FROM `user` WHERE email = "priya156@gmail.com";
+SELECT name, userid, role, email
+FROM user;
 
 UPDATE `user` SET name ="Aarti", role ="user", country ="India" WHERE userid = 4;
 
