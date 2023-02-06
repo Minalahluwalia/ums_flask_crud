@@ -1,6 +1,6 @@
 # import mysqldb.cursors
 import re
-
+import time
 import pymysql as MySQLdb
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
@@ -92,14 +92,13 @@ def view():
         db='mydata',
     )
     curr = conn.cursor()
-    curr.execute('SELECT * FROM user')
+    curr.execute('SELECT * from user')
     db_users = curr.fetchall()
-
     # Close cursor after fetching data
     curr.close()
 
     users = [
-        [1, "user1", "user1@example.com", "password1", "admin", "USA"],
+        [2], [3], [4], [5]
     ]
     # Add the additional list of users to the database users
     users = db_users
@@ -131,20 +130,24 @@ def change_password():
     return render_template('change_password.html', message=message)
 
 
-@app.route('/delete', methods=['GET', 'POST'])
+@app.route('/delete', methods=["GET", "POST"])
 def delete():
-    if 'logged_in' in session:
-        userid = request.form['userid']
+    message = ''
+    if request.method == 'POST' and 'email' in request.form and 'userid' in request.form:
+        userId = request.form['userid']
         conn = MySQLdb.connect(
             host='127.0.0.1',
             user='newuser',
             password='12345',
-            db='mydata'
+            db='mydata',
         )
         curr = conn.cursor()
-        curr.execute("DELETE FROM `user` WHERE userid = %s", (userid,))
+        curr.execute('DELETE * FROM user WHERE email = % s AND userid = % s', (userId,))
+        print(curr, 'deleted')
         conn.commit()
-    return redirect(url_for('users'))
+        print(curr, 'deleted2')
+        message = 'Deleted Successfully !'
+    return render_template('users.html', message=message)
 
 
 @app.route('/register', methods=['GET', 'POST'])
