@@ -187,5 +187,37 @@ def register():
     return redirect(url_for('users'))
 
 
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    global editUser
+    message = ''
+    if 'logged_in' in session:
+        editUserId = request.args.get('userid')
+        conn = MySQLdb.connect(
+            host='127.0.0.1',
+            user='newuser',
+            password='12345',
+            db='mydata',
+        )
+        curr = conn.cursor()
+        curr.execute('SELECT * FROM user WHERE userid = %s', (editUserId, ))
+        editUser = curr.fetchone()
+        if request.method == 'POST' and 'userid' in request.form and 'name' in request.form and 'role' in request.form and 'country' in request.form:
+            userId = request.form['userid']
+            userName = request.form['name']
+            role = request.form['role']
+            country = request.form['country']
+            curr.execute('UPDATE user SET name = %s, role = %s, country = %s WHERE userid = %s',
+                         (userName, role, country, (userId, ),))
+            print(userName, role, country, (userId,))
+            conn.commit()
+            message = 'User updated successfully!'
+        else:
+            msg = 'User not found!'
+    return render_template('edit.html', message=message, editUser=editUser)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
