@@ -1,10 +1,14 @@
 # import mysqldb.cursors
 import re
-import time
+
+import pymysql
 import pymysql as MySQLdb
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 from mysql.connector import cursor
+import werkzeug
+from werkzeug.routing import Map
+from werkzeug.wrappers import Request, Response
 
 app = Flask(__name__)
 
@@ -92,14 +96,17 @@ def view():
         db='mydata',
     )
     curr = conn.cursor()
-    curr.execute('SELECT * from user')
+    curr.execute('SELECT * FROM user')
     db_users = curr.fetchall()
-    # Close cursor after fetching data
-    curr.close()
 
-    users = [
-        [2], [3], [4], [5]
-    ]
+    users = []
+    for row in curr.fetchall():
+        user = {
+            'id': row[0],
+            'name': row[1],
+            'email': row[2]
+        }
+        users.append(user)
     # Add the additional list of users to the database users
     users = db_users
     return render_template('view.html', users=users)
@@ -130,25 +137,25 @@ def change_password():
     return render_template('change_password.html', message=message)
 
 
+# Route to delete user record
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
-    msg = ''
-    if 'logged_in' in session:
-        if request.method == 'POST' and 'name' in request.form and 'email' in request.form:
-            email = request.form['email']
-            userid = request.form['userid']
-            conn = MySQLdb.connect(
-                    host='127.0.0.1',
-                    user='newuser',
-                    password='12345',
-                    db='mydata',
-            )
-            curr = conn.cursor()
-            curr.execute('DELETE userid FROM user where email = % s', (userid, email))
-            conn.commit()
-            msg = 'deleted successfully!'
-        return redirect(url_for('delete', msg=msg))
-    return redirect(url_for('users'))
+    message = ''
+    userid = request.args.get('userid')
+    conn = MySQLdb.connect(
+        host='127.0.0.1',
+        user='newuser',
+        password='12345',
+        db='mydata',
+    )
+    # Create cursor to execute queries
+    curr = conn.cursor()
+    curr.execute('DELETE FROM user WHERE userid = %s', (userid,))
+    user = curr.fetchall()
+    print(user)
+    conn.commit()
+    message = 'User deleted'
+    return render_template('users.html', message=message, user=user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -200,7 +207,7 @@ def edit():
             db='mydata',
         )
         curr = conn.cursor()
-        curr.execute('SELECT * FROM user WHERE userid = %s', (editUserId, ))
+        curr.execute('SELECT * FROM user WHERE userid = %s', (editUserId,))
         editUser = curr.fetchone()
         if request.method == 'POST' and 'userid' in request.form and 'name' in request.form and 'role' in request.form and 'country' in request.form:
             userId = request.form['userid']
@@ -208,15 +215,13 @@ def edit():
             role = request.form['role']
             country = request.form['country']
             curr.execute('UPDATE user SET name = %s, role = %s, country = %s WHERE userid = %s',
-                         (userName, role, country, (userId, ),))
+                         (userName, role, country, (userId,),))
             print(userName, role, country, (userId,))
             conn.commit()
             message = 'User updated successfully!'
         else:
-            msg = 'User not found!'
+            message = 'User not found!'
     return render_template('edit.html', message=message, editUser=editUser)
-
-
 
 
 if __name__ == '__main__':
