@@ -12,7 +12,7 @@
             {% endif %}
             <div class = "form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ editUser.name }}">
+                <input type="text" class="form-control" id="name" name="name" value="{{editUser.1}}">
             </div>
             <div class = "form-group">
                 <label for ="role">Role:</label>
@@ -23,10 +23,10 @@
             </div>
             <div class = "form-group">
                 <label for="country">Country:</label>
-                <input type="text" class="form-control" id="country" name="country" value="{{ editUser.country }}">
+                <input type="text" class="form-control" id="country" name="country" value="{{editUser.4}}">
             </div>
 
-            <input type = "hidden" id="userid" name="userid" value="{{ editUser.userid }}">
+            <input type = "hidden" id="userid" name="userid" value="{{editUser.0}}">
             <button type ="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
