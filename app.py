@@ -1,6 +1,5 @@
 # import mysqldb.cursors
 import re
-
 import pymysql
 import pymysql as MySQLdb
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -225,4 +224,4 @@ def edit():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(port=8000)
