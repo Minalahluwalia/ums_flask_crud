@@ -1,13 +1,8 @@
-# import mysqldb.cursors
 import re
-import pymysql
 import pymysql as MySQLdb
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
-from mysql.connector import cursor
-import werkzeug
-from werkzeug.routing import Map
-from werkzeug.wrappers import Request, Response
+
 
 app = Flask(__name__)
 
@@ -224,4 +219,4 @@ def edit():
 
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(debug=True, port=8000)
