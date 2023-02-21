@@ -33,9 +33,9 @@
                 <td>{{user.3}}</td>
                 <td>{{user.4}}</td>
                 <td>{{user.5}}</td>
-                <td><a href = "{{ url_for('view', userid=user.userid) }}" class = "btn btn-success">View</a></td>
-                <td><a href = "{{ url_for('edit', userid=user.userid) }}" class = "btn btn-primary">Update</a></td>
-                <td><a href = "{{ url_for('change_password', userid=user.userid) }}" class = "btn btn-warning">Change Password</a></td>
+                <td><a href = "{{ url_for('view', userid=user.0) }}" class = "btn btn-success">View</a></td>
+                <td><a href = "{{ url_for('edit', userid=user.0) }}" class = "btn btn-primary">Update</a></td>
+                <td><a href = "{{ url_for('change_password', userid=user.0) }}" class = "btn btn-warning">Change Password</a></td>
                 <td><a href="{{ url_for('delete', userid=user.0)}}"  class="btn btn-danger">Delete</a></td>
             </tr>
           {% endfor %}
