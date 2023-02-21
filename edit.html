@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <title> Add User</title>
 <body>
-    <div class = "container">
+    <div class = "container card bg-dark text-white">
         {% include 'menu.html' %}
         <br>
         <h3>Update User</h3>
@@ -10,18 +10,18 @@
             {% if message is defined and message %}
                 <div class="alert alert-warning">{{ message }}</div>
             {% endif %}
-            <div class = "form-group">
+            <div class = "form-group card bg-dark">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{editUser.1}}">
             </div>
-            <div class = "form-group">
+            <div class = "form-group card bg-dark">
                 <label for ="role">Role:</label>
                 <select class ="form-control" id ="role" name="role">
                     <option value ="admin" {% if editUser.role=="admin" %} selected {% endif %}>Admin</option>
                     <option value="user" {% if editUser.role=="user" %} selected {% endif %}>User</option>
                 </select>
             </div>
-            <div class = "form-group">
+            <div class = "form-group card bg-dark">
                 <label for="country">Country:</label>
                 <input type="text" class="form-control" id="country" name="country" value="{{editUser.4}}">
             </div>
