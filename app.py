@@ -2,10 +2,7 @@ import re
 import pymysql as MySQLdb
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
-from mysql.connector import cursor
-import werkzeug
-from werkzeug.routing import Map
-from werkzeug.wrappers import Request, Response
+
 
 app = Flask(__name__)
 
@@ -104,7 +101,7 @@ def view():
             'email': row[2]
         }
         users.append(user)
-    # Add the additional list of users to the database users
+    
     users = db_users
     return render_template('view.html', users=users)
 
@@ -145,7 +142,6 @@ def delete():
         password='12345',
         db='mydata',
     )
-    # Create cursor to execute queries
     curr = conn.cursor()
     curr.execute('DELETE FROM user WHERE userid = %s', (userid,))
     user = curr.fetchall()
@@ -222,4 +218,4 @@ def edit():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=False, port=8000)
